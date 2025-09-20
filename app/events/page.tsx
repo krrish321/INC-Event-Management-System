@@ -1,0 +1,55 @@
+// app/events/page.tsx
+
+import EventCard from "@/components/EventCard"; 
+import Link from "next/link";
+import { format } from "date-fns";
+
+// Event data structure 
+interface Event {
+  id: number;
+  name: string;
+  description: string;
+  start_datetime: string;
+  end_datetime: string;
+  location: string;
+  event_type: string;
+  level: string;
+  created_by: number;
+}
+
+// Data fetch async function
+async function getEvents() {
+  try {
+    const response = await fetch("http://localhost:5000/api/events", {
+      cache: "no-store", //  request data fetch
+    });
+    
+    if (!response.ok) {
+      throw new Error("Failed to fetch events");
+    }
+    
+    return response.json();
+  } catch (error) {
+    console.error("Failed to fetch events:", error);
+    return []; // Error empty array return
+  }
+}
+
+export default async function EventsPage() {
+  const events: Event[] = await getEvents();
+
+  return (
+    <div className="container mx-auto p-4">
+      <h1 className="text-3xl font-bold mb-6 text-center">Upcoming Events</h1>
+      {events.length === 0 ? (
+        <p className="text-center text-gray-500">No events found.</p>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {events.map((event) => (
+            <EventCard key={event.id} event={event} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
