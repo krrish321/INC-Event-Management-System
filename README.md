@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🎉 Event Management System  
 
 An **Event Management System** built using **React.js (JavaScript)** for the frontend and **Node.js + MySQL** for the backend.  
@@ -99,3 +100,6 @@ Feel free to fork this repository and submit pull requests. Suggestions and impr
 👤 Developer: Krish Sirohiya
 📩 Email: [ Krrishsirohiya321@gmail.com ]
 🔗 GitHub: [ https://github.com/krrish321 ]
+=======
+# INC-Event-Management-System
+>>>>>>> 0d904af1e761a9ab7b053efd34af930db0a4d43c
