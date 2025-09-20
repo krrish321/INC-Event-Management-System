@@ -13,7 +13,10 @@ const app = express();
 // 🔥 Middleware first
 app.use(express.json()); // body parsing
 app.use(cors({
-  origin: "http://localhost:3000",
+  origin: [
+    "http://localhost:3000", // local dev
+    "https://inc-event-management-system-5zoqlvwyd-krrish321s-projects.vercel.app" // deployed frontend
+  ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
