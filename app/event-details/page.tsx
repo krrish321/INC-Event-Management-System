@@ -22,7 +22,8 @@ export default function EventsPage() {
   useEffect(() => {
     async function fetchEvents() {
       try {
-        const response = await fetch('http://localhost:5000/api/events');
+      const response = await fetch('https://inc-event-management-backen.onrender.com/api/events');
+
         
         if (!response.ok) {
           throw new Error('Failed to fetch events');

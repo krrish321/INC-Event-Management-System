@@ -20,9 +20,11 @@ interface Event {
 // Data fetch async function
 async function getEvents() {
   try {
-    const response = await fetch("http://localhost:5000/api/events", {
-      cache: "no-store", //  request data fetch
-    });
+    const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+const response = await fetch(`${API_BASE}/api/events`, {
+  cache: "no-store",
+});
     
     if (!response.ok) {
       throw new Error("Failed to fetch events");

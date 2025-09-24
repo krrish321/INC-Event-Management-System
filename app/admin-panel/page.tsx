@@ -25,24 +25,26 @@ export default function AdminPanelPage() {
     fetchEvents()
   }, [])
 
-  const fetchEvents = async () => {
-    setLoading(true)
-    try {
-      const res = await fetch("http://localhost:5000/api/events", {
-        cache: "no-store",
-      })
-      if (!res.ok) {
-        throw new Error("Failed to fetch events")
-      }
-      const data = await res.json()
-      setEvents(data)
-    } catch (error) {
-      console.error("Error fetching events:", error)
-      setEvents([])
-    } finally {
-      setLoading(false)
+ const fetchEvents = async () => {
+  setLoading(true);
+  try {
+    const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL;
+    const res = await fetch(`${API_BASE}/api/events`, { cache: "no-store" });
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch events");
     }
+
+    const data = await res.json();
+    setEvents(data);
+  } catch (error) {
+    console.error("Error fetching events:", error);
+    setEvents([]);
+  } finally {
+    setLoading(false);
   }
+};
+
 
   const getBadgeClasses = (type: string) => {
     switch (type) {
