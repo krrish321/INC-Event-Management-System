@@ -1,0 +1,9 @@
+[33mfaa89a3[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m updated API URLs to Render backend
+[33ma40cab7[m updated event list page with env based backend URL
+[33m7fa9c57[m Add backend lib and updated admin event list page
+[33m54c8ce7[m Update README.md
+[33m0a4a1ab[m Update server.js: add CORS fix and backend improvements
+[33me4b0932[m Update backend/package.json: add type module for ES modules
+[33mb384815[m Resolved merge conflict in README.md
+[33md06564a[m Initial commit - backend with db, controllers, routes, server
+[33m0d904af[m Initial commit
