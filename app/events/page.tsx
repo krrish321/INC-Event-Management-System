@@ -56,7 +56,6 @@
 //   );
 // }
 
-
 import EventCard from "@/components/EventCard";
 
 // Event type according to SQL table
@@ -76,7 +75,10 @@ interface Event {
 async function getEvents(): Promise<Event[]> {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/events`, {
-      cache: "no-store",
+      // ✅ FIX: Dynamic Server Usage error  revalidate: 0 use
+      next: {
+        revalidate: 0,
+      },
     });
 
     if (!response.ok) {

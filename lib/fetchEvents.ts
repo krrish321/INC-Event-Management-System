@@ -18,7 +18,12 @@ export const fetchEventsFromBackend = async (): Promise<Event[]> => {
 
     if (!API_BASE) throw new Error("NEXT_PUBLIC_API_URL is not defined")
 
-    const res = await fetch(`${API_BASE}/api/events`, { cache: "no-store" })
+    const res = await fetch(`${API_BASE}/api/events`, { 
+      // ✅ FIX: Dynamic Server Usage error  revalidate: 0 use
+      next: {
+        revalidate: 0,
+      },
+    })
 
     if (!res.ok) {
       throw new Error(`Failed to fetch events: ${res.status} ${res.statusText}`)
