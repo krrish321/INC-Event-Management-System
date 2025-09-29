@@ -71,10 +71,9 @@ export default function AddEventPage() {
     try {
       const payload = { ...formData }
 
-      // Use environment variable or fallback to localhost
-      const apiURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"
-
-      const res = await fetch(`${apiURL}/api/events`, {
+      // ❌ REMOVED: const apiURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"
+      // ✅ CORRECTED: Use the relative path for the internal Next.js API Route.
+      const res = await fetch(`/api/events`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -82,7 +81,7 @@ export default function AddEventPage() {
 
       if (!res.ok) {
         const errorText = await res.text()
-        throw new Error(`Failed to create event: ${errorText}`)
+        throw new Error(`Failed to create event: ${res.status} ${errorText}`)
       }
 
       const data = await res.json()
@@ -117,50 +116,56 @@ export default function AddEventPage() {
   return (
     <div className="p-8">
       <h1 className="text-2xl font-bold mb-4">Add Event</h1>
-
       <form onSubmit={handleSubmit}>
         <div className="space-y-4">
           <div>
-            <Label>Event Name</Label>
-            <Input value={formData.eventName} onChange={(e) => handleInputChange("eventName", e.target.value)} />
+            <Label htmlFor="eventName">Event Name</Label>
+            <Input id="eventName" value={formData.eventName} onChange={(e) => handleInputChange("eventName", e.target.value)} />
+            {errors.eventName && <p className="text-red-500 text-sm">{errors.eventName}</p>}
           </div>
 
           <div>
-            <Label>Description</Label>
-            <Textarea value={formData.description} onChange={(e) => handleInputChange("description", e.target.value)} />
+            <Label htmlFor="description">Description</Label>
+            <Textarea id="description" value={formData.description} onChange={(e) => handleInputChange("description", e.target.value)} />
+            {errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}
           </div>
 
           <div className="flex gap-4">
-            <div>
-              <Label>Start Date</Label>
-              <Input type="date" value={formData.startDate} onChange={(e) => handleInputChange("startDate", e.target.value)} />
+            <div className="flex-1">
+              <Label htmlFor="startDate">Start Date</Label>
+              <Input id="startDate" type="date" value={formData.startDate} onChange={(e) => handleInputChange("startDate", e.target.value)} />
+              {errors.startDate && <p className="text-red-500 text-sm">{errors.startDate}</p>}
             </div>
-            <div>
-              <Label>Start Time</Label>
-              <Input type="time" value={formData.startTime} onChange={(e) => handleInputChange("startTime", e.target.value)} />
+            <div className="flex-1">
+              <Label htmlFor="startTime">Start Time</Label>
+              <Input id="startTime" type="time" value={formData.startTime} onChange={(e) => handleInputChange("startTime", e.target.value)} />
+              {errors.startTime && <p className="text-red-500 text-sm">{errors.startTime}</p>}
             </div>
           </div>
 
           <div className="flex gap-4">
-            <div>
-              <Label>End Date</Label>
-              <Input type="date" value={formData.endDate} onChange={(e) => handleInputChange("endDate", e.target.value)} />
+            <div className="flex-1">
+              <Label htmlFor="endDate">End Date</Label>
+              <Input id="endDate" type="date" value={formData.endDate} onChange={(e) => handleInputChange("endDate", e.target.value)} />
+              {errors.endDate && <p className="text-red-500 text-sm">{errors.endDate}</p>}
             </div>
-            <div>
-              <Label>End Time</Label>
-              <Input type="time" value={formData.endTime} onChange={(e) => handleInputChange("endTime", e.target.value)} />
+            <div className="flex-1">
+              <Label htmlFor="endTime">End Time</Label>
+              <Input id="endTime" type="time" value={formData.endTime} onChange={(e) => handleInputChange("endTime", e.target.value)} />
+              {errors.endTime && <p className="text-red-500 text-sm">{errors.endTime}</p>}
             </div>
           </div>
 
           <div>
-            <Label>Location</Label>
-            <Input value={formData.location} onChange={(e) => handleInputChange("location", e.target.value)} />
+            <Label htmlFor="location">Location</Label>
+            <Input id="location" value={formData.location} onChange={(e) => handleInputChange("location", e.target.value)} />
+            {errors.location && <p className="text-red-500 text-sm">{errors.location}</p>}
           </div>
 
           <div>
-            <Label>Level</Label>
+            <Label htmlFor="level">Level</Label>
             <Select value={formData.level} onValueChange={(val) => handleInputChange("level", val)}>
-              <SelectTrigger>
+              <SelectTrigger id="level">
                 <SelectValue placeholder="Select level" />
               </SelectTrigger>
               <SelectContent>
@@ -169,12 +174,13 @@ export default function AddEventPage() {
                 ))}
               </SelectContent>
             </Select>
+            {errors.level && <p className="text-red-500 text-sm">{errors.level}</p>}
           </div>
 
           <div>
-            <Label>Event Type</Label>
+            <Label htmlFor="eventType">Event Type</Label>
             <Select value={formData.eventType} onValueChange={(val) => handleInputChange("eventType", val)}>
-              <SelectTrigger>
+              <SelectTrigger id="eventType">
                 <SelectValue placeholder="Select event type" />
               </SelectTrigger>
               <SelectContent>
@@ -183,11 +189,13 @@ export default function AddEventPage() {
                 ))}
               </SelectContent>
             </Select>
+            {errors.eventType && <p className="text-red-500 text-sm">{errors.eventType}</p>}
           </div>
 
           <div>
-            <Label>Assigned User ID</Label>
-            <Input type="number" value={formData.assignedUser} onChange={(e) => handleInputChange("assignedUser", e.target.value)} />
+            <Label htmlFor="assignedUser">Assigned User ID</Label>
+            <Input id="assignedUser" type="number" value={formData.assignedUser} onChange={(e) => handleInputChange("assignedUser", e.target.value)} />
+            {errors.assignedUser && <p className="text-red-500 text-sm">{errors.assignedUser}</p>}
           </div>
 
           <Button type="submit" className="mt-4">Add Event</Button>

@@ -1,16 +1,16 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
-import { Navbar } from "@/components/navbar"
+import { useRouter } from "next/navigation" // Keeping this standard import for Next.js
+import { Navbar } from "../../components/navbar" // Fixed path alias
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { requireAuth } from "@/lib/auth"
-import { type Event } from "@/lib/dummy-data"
+import { requireAuth } from "../../lib/auth" // Fixed path alias
+import { type Event } from "../../lib/dummy-data" // Assuming dummy-data is also in lib
 import { Eye, Calendar, MapPin, Users, Plus, BarChart3, Shield, CheckCircle, XCircle } from "lucide-react"
 import { format } from "date-fns"
 
@@ -25,25 +25,29 @@ export default function AdminPanelPage() {
     fetchEvents()
   }, [])
 
- const fetchEvents = async () => {
-  setLoading(true);
-  try {
-    const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL;
-    const res = await fetch(`${API_BASE}/api/events`, { cache: "no-store" });
+  const fetchEvents = async () => {
+    setLoading(true);
+    try {
+      // ✅ CORRECTED: Use relative path for internal Next.js API route.
+      // This fix addresses the original issue of data not showing due to a bad API URL.
+      const res = await fetch(`/api/events`, { cache: "no-store" });
+      
+      if (!res.ok) {
+        // Log the status and text to help debugging failed fetches
+        const errorText = await res.text();
+        console.error(`Fetch error: ${res.status} ${errorText}`);
+        throw new Error("Failed to fetch events");
+      }
 
-    if (!res.ok) {
-      throw new Error("Failed to fetch events");
+      const data = await res.json();
+      setEvents(data);
+    } catch (error) {
+      console.error("Error fetching events:", error);
+      setEvents([]);
+    } finally {
+      setLoading(false);
     }
-
-    const data = await res.json();
-    setEvents(data);
-  } catch (error) {
-    console.error("Error fetching events:", error);
-    setEvents([]);
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
 
   const getBadgeClasses = (type: string) => {
@@ -333,4 +337,3 @@ export default function AdminPanelPage() {
     </div>
   )
 }
-

@@ -113,8 +113,6 @@
 //   );
 // }
 
-
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -139,8 +137,7 @@ export default function AdminEventListPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // ✅ Dynamic backend URL based on environment
-  const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
+  // BASE_URL is intentionally removed to force a relative path for internal API routes.
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -148,21 +145,26 @@ export default function AdminEventListPage() {
         setIsLoading(true);
         setError(null);
 
-        const res = await fetch(`${BASE_URL}/api/events`);
-        if (!res.ok) throw new Error(`Failed to fetch events: ${res.statusText}`);
+        // ✅ The fetch must use the RELATIVE path: /api/events
+        const res = await fetch('/api/events'); 
+        
+        if (!res.ok) {
+          throw new Error(`Failed to fetch events: ${res.status} ${res.statusText}`);
+        }
 
         const data: Event[] = await res.json();
         setEvents(data);
+
       } catch (err: any) {
-        console.error("Failed to fetch events:", err);
-        setError(err.message || "Error fetching events");
+        console.error("Error fetching events:", err.message);
+        setError(`Error fetching events: ${err.message}`);
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchEvents();
-  }, [BASE_URL]);
+  }, []); 
 
   if (isLoading) return <p className="text-center mt-20">Loading events...</p>;
   if (error) return <p className="text-center mt-20 text-red-500">Error: {error}</p>;

@@ -22,7 +22,7 @@ export default function EventsPage() {
   useEffect(() => {
     async function fetchEvents() {
       try {
-      const response = await fetch('https://inc-event-management-backen.onrender.com/api/events');
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/events`);
 
         
         if (!response.ok) {
