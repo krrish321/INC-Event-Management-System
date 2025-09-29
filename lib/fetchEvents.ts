@@ -14,9 +14,9 @@ export type Event = {
 
 export const fetchEventsFromBackend = async (): Promise<Event[]> => {
   try {
-    const API_BASE = process.env.NEXT_PUBLIC_BASE_URL
+    const API_BASE = process.env.NEXT_PUBLIC_API_URL
 
-    if (!API_BASE) throw new Error("NEXT_PUBLIC_BASE_URL is not defined")
+    if (!API_BASE) throw new Error("NEXT_PUBLIC_API_URL is not defined")
 
     const res = await fetch(`${API_BASE}/api/events`, { cache: "no-store" })
 

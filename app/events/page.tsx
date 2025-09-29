@@ -75,7 +75,7 @@ interface Event {
 // Fetch events from our API route
 async function getEvents(): Promise<Event[]> {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/events`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/events`, {
       cache: "no-store",
     });
 
