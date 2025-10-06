@@ -13,14 +13,16 @@
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
-    "dotenv": "^17.2.2",
+    "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "multer": "^2.0.2",
-    "mysql2": "^3.15.1"
+    "mysql2": "^3.15.1",
+    "pg": "^8.16.3"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.10",
+    "@types/pg": "^8.15.5",
     "nodemon": "^3.1.10"
   }
 }
